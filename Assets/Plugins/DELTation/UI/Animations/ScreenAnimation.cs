@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace DELTation.UI.Animations
 {
-	public abstract class ScreenAnimation<T> : ScreenListener
+	public abstract class ScreenAnimation<T> : MonoBehaviour, IScreenListener
 	{
 		[SerializeField] private TweenData _openData = default;
 		[SerializeField] private bool _openToInitialState = true;
@@ -11,14 +11,14 @@ namespace DELTation.UI.Animations
 		[SerializeField] private TweenData _closeData = default;
 		[SerializeField] private T _closedState = default;
 
-		public override bool IsWorking => _tweener.IsActive;
-		public override void OnUpdate(float deltaTime) => Tweener.Update(deltaTime);
+		public bool IsWorking => _tweener.IsActive;
+		public void OnUpdate(float deltaTime) => Tweener.Update(deltaTime);
 
-		public override void OnOpened() => Tweener.Open();
+		public void OnOpened() => Tweener.Open();
 
-		public override void OnClosed() => Tweener.Close();
+		public void OnClosed() => Tweener.Close();
 
-		public override void OnClosedImmediately() => Tweener.CloseImmediately();
+		public void OnClosedImmediately() => Tweener.CloseImmediately();
 
 		private ScreenTweener<T> Tweener => _tweener ?? (_tweener = ConstructTweener());
 
