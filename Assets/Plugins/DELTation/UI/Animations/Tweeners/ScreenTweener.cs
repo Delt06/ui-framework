@@ -65,10 +65,10 @@ namespace DELTation.UI.Tweeners
 		private T Interpolate(T value1, T value2, float t)
 		{
 			var linearT = _currentEase.GetValue(t, _currentOvershoot);
-			return LinearlyInterpolateUnclamped(value1, value2, linearT);
+			return InterpolateValuesUnclamped(value1, value2, linearT);
 		}
 
-		protected abstract T LinearlyInterpolateUnclamped(T value1, T value2, float t);
+		protected abstract T InterpolateValuesUnclamped(T value1, T value2, float t);
 
 		private T _fromState;
 		private T _toState;

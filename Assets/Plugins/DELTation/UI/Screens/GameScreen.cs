@@ -9,7 +9,7 @@ namespace DELTation.UI.Screens
 	public sealed class GameScreen : MonoBehaviour, IScreenListener, IGameScreen
 	{
 		[SerializeField] private bool _closeOnStart = true;
-		
+
 		public bool IsOpened => _isOpened ?? false;
 
 		public void Open()
@@ -92,8 +92,8 @@ namespace DELTation.UI.Screens
 			foreach (var listener in Listeners)
 			{
 				listener.OnUpdate(this, Time.unscaledDeltaTime);
-				
-				if (listener.ShouldBeAwaited) 
+
+				if (listener.ShouldBeAwaited)
 					shouldBeAwaited = true;
 			}
 

@@ -1,5 +1,5 @@
 ﻿using System;
-using DELTation.UI.Tweeners.Types;
+using DELTation.UI.Animations.Tweeners.Types;
 using UnityEngine;
 
 namespace DELTation.UI.Animations.Tweeners.Properties
@@ -9,8 +9,6 @@ namespace DELTation.UI.Animations.Tweeners.Properties
 		public ScaleScreenTweener(Transform transform, Vector3 openState, Vector3 closedState) :
 			base(openState, closedState) =>
 			_transform = transform ? transform : throw new ArgumentNullException(nameof(transform));
-
-		public ScaleScreenTweener(Transform transform) : this(transform, transform.localScale, Vector3.zero) { }
 
 		protected override Vector3 CurrentState
 		{

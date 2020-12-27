@@ -4,7 +4,7 @@ using DELTation.UI.Tweeners;
 
 namespace DELTation.UI.Animations
 {
-	public abstract class ScreenAlphaAnimation : ScreenAnimation<float>
+	public abstract class ScreenAlphaAnimation : ScreenAnimation<float, float>
 	{
 		protected override ScreenTweener<float> CreateTweener(float openState, float closedState) =>
 			new AlphaScreenTweener(TransparentElement, openState, closedState);

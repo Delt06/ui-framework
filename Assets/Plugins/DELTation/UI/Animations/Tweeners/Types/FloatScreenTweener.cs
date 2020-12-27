@@ -1,12 +1,13 @@
-﻿using UnityEngine;
+﻿using DELTation.UI.Tweeners;
+using UnityEngine;
 
-namespace DELTation.UI.Tweeners.Types
+namespace DELTation.UI.Animations.Tweeners.Types
 {
 	public abstract class FloatScreenTweener : ScreenTweener<float>
 	{
 		protected FloatScreenTweener(float openState, float closedState) : base(openState, closedState) { }
 
-		protected override float LinearlyInterpolateUnclamped(float value1, float value2, float t) =>
+		protected sealed override float InterpolateValuesUnclamped(float value1, float value2, float t) =>
 			Mathf.LerpUnclamped(value1, value2, t);
 	}
 }

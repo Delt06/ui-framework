@@ -4,13 +4,13 @@ using UnityEngine;
 
 namespace DELTation.UI.Animations
 {
-	public abstract class ScreenAnimation<T> : MonoBehaviour, IScreenListener
+	public abstract class ScreenAnimation<TInspectorValue, TValue> : MonoBehaviour, IScreenListener
 	{
 		[SerializeField] private TweenData _openData = default;
 		[SerializeField] private bool _openToInitialState = true;
-		[SerializeField] private T _openState = default;
+		[SerializeField] private TInspectorValue _openState = default;
 		[SerializeField] private TweenData _closeData = default;
-		[SerializeField] private T _closedState = default;
+		[SerializeField] private TInspectorValue _closedState = default;
 
 		public bool ShouldBeAwaited => _tweener.IsActive;
 		public void OnUpdate(IGameScreen gameScreen, float deltaTime) => Tweener.Update(deltaTime);
@@ -21,9 +21,9 @@ namespace DELTation.UI.Animations
 
 		public void OnClosedImmediately(IGameScreen gameScreen) => Tweener.CloseImmediately();
 
-		private ScreenTweener<T> Tweener => _tweener ?? (_tweener = ConstructTweener());
+		private ScreenTweener<TValue> Tweener => _tweener ?? (_tweener = ConstructTweener());
 
-		private ScreenTweener<T> ConstructTweener()
+		private ScreenTweener<TValue> ConstructTweener()
 		{
 			var tweener = CreateTweener(OpenState, ClosedState);
 			_openData.CopyTo(tweener.OpenData);
@@ -31,13 +31,13 @@ namespace DELTation.UI.Animations
 			return tweener;
 		}
 
-		protected abstract ScreenTweener<T> CreateTweener(T openState, T closedState);
+		protected abstract ScreenTweener<TValue> CreateTweener(TInspectorValue openState, TInspectorValue closedState);
 
-		private T OpenState => _openToInitialState ? GetInitialState() : _openState;
-		private T ClosedState => _closedState;
+		private TInspectorValue OpenState => _openToInitialState ? GetInitialState() : _openState;
+		private TInspectorValue ClosedState => _closedState;
 
-		protected abstract T GetInitialState();
+		protected abstract TInspectorValue GetInitialState();
 
-		private ScreenTweener<T> _tweener;
+		private ScreenTweener<TValue> _tweener;
 	}
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 using DELTation.UI.Animations.Tweeners.Properties.Elements;
-using DELTation.UI.Tweeners.Types;
+using DELTation.UI.Animations.Tweeners.Types;
 
 namespace DELTation.UI.Animations.Tweeners.Properties
 {
@@ -9,9 +9,6 @@ namespace DELTation.UI.Animations.Tweeners.Properties
 		public AlphaScreenTweener(ITransparentElement transparentElement, float openState, float closedState) :
 			base(openState, closedState) => _transparentElement =
 			transparentElement ?? throw new ArgumentNullException(nameof(transparentElement));
-
-		public AlphaScreenTweener(ITransparentElement transparentElement) : this(transparentElement,
-			transparentElement.Alpha, 0f) { }
 
 		protected override float CurrentState
 		{
