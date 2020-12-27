@@ -2,7 +2,7 @@
 using DELTation.UI.Tweeners.Types;
 using UnityEngine;
 
-namespace DELTation.UI.Tweeners.Properties
+namespace DELTation.UI.Animations.Tweeners.Properties
 {
 	public sealed class ScaleScreenTweener : Vector3ScreenTweener
 	{

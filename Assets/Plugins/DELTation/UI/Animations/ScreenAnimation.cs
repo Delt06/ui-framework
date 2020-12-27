@@ -1,4 +1,5 @@
-﻿using DELTation.UI.Tweeners;
+﻿using DELTation.UI.Screens;
+using DELTation.UI.Tweeners;
 using UnityEngine;
 
 namespace DELTation.UI.Animations
@@ -11,14 +12,14 @@ namespace DELTation.UI.Animations
 		[SerializeField] private TweenData _closeData = default;
 		[SerializeField] private T _closedState = default;
 
-		public bool IsWorking => _tweener.IsActive;
-		public void OnUpdate(float deltaTime) => Tweener.Update(deltaTime);
+		public bool ShouldBeAwaited => _tweener.IsActive;
+		public void OnUpdate(IGameScreen gameScreen, float deltaTime) => Tweener.Update(deltaTime);
 
-		public void OnOpened() => Tweener.Open();
+		public void OnOpened(IGameScreen gameScreen) => Tweener.Open();
 
-		public void OnClosed() => Tweener.Close();
+		public void OnClosed(IGameScreen gameScreen) => Tweener.Close();
 
-		public void OnClosedImmediately() => Tweener.CloseImmediately();
+		public void OnClosedImmediately(IGameScreen gameScreen) => Tweener.CloseImmediately();
 
 		private ScreenTweener<T> Tweener => _tweener ?? (_tweener = ConstructTweener());
 

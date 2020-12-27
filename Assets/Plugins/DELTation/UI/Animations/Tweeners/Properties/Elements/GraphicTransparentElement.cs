@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine.UI;
 
-namespace DELTation.UI.Tweeners.Properties.Elements
+namespace DELTation.UI.Animations.Tweeners.Properties.Elements
 {
 	public sealed class GraphicTransparentElement : ITransparentElement
 	{

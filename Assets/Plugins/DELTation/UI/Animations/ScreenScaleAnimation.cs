@@ -1,5 +1,5 @@
-﻿using DELTation.UI.Tweeners;
-using DELTation.UI.Tweeners.Properties;
+﻿using DELTation.UI.Animations.Tweeners.Properties;
+using DELTation.UI.Tweeners;
 using UnityEngine;
 
 namespace DELTation.UI.Animations

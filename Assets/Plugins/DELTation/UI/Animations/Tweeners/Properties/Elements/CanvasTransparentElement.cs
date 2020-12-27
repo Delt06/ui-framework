@@ -2,7 +2,7 @@
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace DELTation.UI.Tweeners.Properties.Elements
+namespace DELTation.UI.Animations.Tweeners.Properties.Elements
 {
 	public sealed class CanvasGroupTransparentElement : ITransparentElement
 	{

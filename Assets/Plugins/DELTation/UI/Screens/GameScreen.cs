@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace DELTation.UI
+namespace DELTation.UI.Screens
 {
 	[DisallowMultipleComponent]
-	public sealed class GameScreen : MonoBehaviour, IScreenListener
+	public sealed class GameScreen : MonoBehaviour, IScreenListener, IGameScreen
 	{
 		public bool IsOpened => _isOpened ?? false;
 
@@ -16,9 +16,9 @@ namespace DELTation.UI
 
 			ObjectIsActive = true;
 			_isOpened = true;
-
 			if (!ObjectIsActive)
 				ObjectIsActive = true;
+			_isOpened = true;
 
 			RaycastBlocker.Active = false;
 			transform.SetAsLastSibling();
@@ -35,7 +35,7 @@ namespace DELTation.UI
 		{
 			foreach (var listener in _listeners)
 			{
-				listener.OnOpened();
+				listener.OnOpened(this);
 			}
 
 			Opened?.Invoke(this, EventArgs.Empty);
@@ -56,7 +56,7 @@ namespace DELTation.UI
 		{
 			foreach (var listener in Listeners)
 			{
-				listener.OnClosed();
+				listener.OnClosed(this);
 			}
 
 			Closed?.Invoke(this, EventArgs.Empty);
@@ -75,7 +75,7 @@ namespace DELTation.UI
 		{
 			foreach (var listener in Listeners)
 			{
-				listener.OnClosedImmediately();
+				listener.OnClosedImmediately(this);
 			}
 
 			ClosedImmediately?.Invoke(this, EventArgs.Empty);
@@ -85,16 +85,17 @@ namespace DELTation.UI
 
 		private void Update()
 		{
-			var anyWorking = false;
+			var shouldBeAwaited = false;
 
 			foreach (var listener in Listeners)
 			{
-				if (!listener.IsWorking) continue;
-				listener.OnUpdate(Time.unscaledDeltaTime);
-				anyWorking = true;
+				listener.OnUpdate(this, Time.unscaledDeltaTime);
+				
+				if (listener.ShouldBeAwaited) 
+					shouldBeAwaited = true;
 			}
 
-			if (!IsOpened && !anyWorking)
+			if (!IsOpened && !shouldBeAwaited)
 				ObjectIsActive = false;
 		}
 
@@ -136,13 +137,13 @@ namespace DELTation.UI
 		private RaycastBlocker _raycastBlocker;
 		private IScreenListener[] _listeners;
 
-		bool IScreenListener.IsWorking => gameObject.activeSelf;
+		bool IScreenListener.ShouldBeAwaited => gameObject.activeSelf;
 
-		void IScreenListener.OnUpdate(float deltaTime) { }
+		void IScreenListener.OnUpdate(IGameScreen gameScreen, float deltaTime) { }
 
-		void IScreenListener.OnOpened() => Open();
-		void IScreenListener.OnClosed() => Close();
+		void IScreenListener.OnOpened(IGameScreen gameScreen) => Open();
+		void IScreenListener.OnClosed(IGameScreen gameScreen) => Close();
 
-		void IScreenListener.OnClosedImmediately() => CloseImmediately();
+		void IScreenListener.OnClosedImmediately(IGameScreen gameScreen) => CloseImmediately();
 	}
 }

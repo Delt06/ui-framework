@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace DELTation.UI
+namespace DELTation.UI.Screens
 {
 	[RequireComponent(typeof(Image))]
 	internal sealed class RaycastBlocker : MonoBehaviour

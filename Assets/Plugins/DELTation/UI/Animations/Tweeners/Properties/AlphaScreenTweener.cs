@@ -1,10 +1,8 @@
 ﻿using System;
-using DELTation.UI.Tweeners.Properties.Elements;
+using DELTation.UI.Animations.Tweeners.Properties.Elements;
 using DELTation.UI.Tweeners.Types;
-using JetBrains.Annotations;
-using UnityEngine.UI;
 
-namespace DELTation.UI.Tweeners.Properties
+namespace DELTation.UI.Animations.Tweeners.Properties
 {
 	public sealed class AlphaScreenTweener : FloatScreenTweener
 	{
