@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace DELTation.UI.Animations
 {
-	public sealed class ScreenPositionAnimation : ScreenAnimation<Vector3, Vector3>
+	public sealed class ScreenAnchoredPositionAnimation : ScreenAnimation<Vector3, Vector3>
 	{
 		[SerializeField] private bool _multiplyValuesByRectSize = false;
 
@@ -19,9 +19,9 @@ namespace DELTation.UI.Animations
 				closedState *= rect.size;
 			}
 
-			return new LocalPositionScreenTweener(rectTransform, openState, closedState);
+			return new AnchoredPositionScreenTweener(rectTransform, openState, closedState);
 		}
 
-		protected override Vector3 GetInitialState() => transform.localPosition;
+		protected override Vector3 GetInitialState() => ((RectTransform) transform).anchoredPosition;
 	}
 }
