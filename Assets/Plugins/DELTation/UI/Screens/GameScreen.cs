@@ -8,6 +8,8 @@ namespace DELTation.UI.Screens
 	[DisallowMultipleComponent]
 	public sealed class GameScreen : MonoBehaviour, IScreenListener, IGameScreen
 	{
+		[SerializeField] private bool _closeOnStart = true;
+		
 		public bool IsOpened => _isOpened ?? false;
 
 		public void Open()
@@ -101,8 +103,15 @@ namespace DELTation.UI.Screens
 
 		private void Awake()
 		{
-			if (_isOpened != true)
-				CloseImmediately();
+			if (_closeOnStart)
+			{
+				if (_isOpened != true)
+					CloseImmediately();
+			}
+			else
+			{
+				_isOpened = ObjectIsActive;
+			}
 		}
 
 		private IEnumerable<IScreenListener> GetChildrenListeners(Transform root)

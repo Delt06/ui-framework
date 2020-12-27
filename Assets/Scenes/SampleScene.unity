@@ -172,6 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a37493cfa3004a3398dca64e67c27c9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _closeOnStart: 1
 --- !u!1 &204373936
 GameObject:
   m_ObjectHideFlags: 0
@@ -1247,6 +1248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a37493cfa3004a3398dca64e67c27c9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _closeOnStart: 1
 --- !u!222 &863820198
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1761,6 +1763,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a37493cfa3004a3398dca64e67c27c9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _closeOnStart: 1
 --- !u!222 &1453883075
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2371,6 +2374,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a37493cfa3004a3398dca64e67c27c9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _closeOnStart: 1
 --- !u!222 &2007330799
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2552,6 +2556,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a37493cfa3004a3398dca64e67c27c9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _closeOnStart: 1
 --- !u!1001 &710518616420146002
 PrefabInstance:
   m_ObjectHideFlags: 0
