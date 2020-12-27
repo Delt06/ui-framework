@@ -1,5 +1,4 @@
-﻿using DELTation.UI.Tweeners;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace DELTation.UI.Animations.Tweeners.Types
 {

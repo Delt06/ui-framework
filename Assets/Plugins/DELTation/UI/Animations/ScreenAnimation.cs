@@ -1,10 +1,12 @@
-﻿using DELTation.UI.Screens;
-using DELTation.UI.Tweeners;
+﻿using DELTation.UI.Animations.Tweeners;
+using DELTation.UI.Screens;
 using UnityEngine;
 
 namespace DELTation.UI.Animations
 {
 	public abstract class ScreenAnimation<TInspectorValue, TValue> : MonoBehaviour, IScreenListener
+		where TInspectorValue : struct
+		where TValue : struct
 	{
 		[SerializeField] private TweenData _openData = default;
 		[SerializeField] private bool _openToInitialState = true;
@@ -31,12 +33,10 @@ namespace DELTation.UI.Animations
 			return tweener;
 		}
 
-		protected abstract ScreenTweener<TValue> CreateTweener(TInspectorValue openState, TInspectorValue closedState);
+		protected abstract ScreenTweener<TValue> CreateTweener(TInspectorValue? openState, TInspectorValue closedState);
 
-		private TInspectorValue OpenState => _openToInitialState ? GetInitialState() : _openState;
+		private TInspectorValue? OpenState => _openToInitialState ? (TInspectorValue?) null : _openState;
 		private TInspectorValue ClosedState => _closedState;
-
-		protected abstract TInspectorValue GetInitialState();
 
 		private ScreenTweener<TValue> _tweener;
 	}

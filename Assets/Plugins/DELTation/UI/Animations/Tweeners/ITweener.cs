@@ -1,4 +1,4 @@
-﻿namespace DELTation.UI.Tweeners
+﻿namespace DELTation.UI.Animations.Tweeners
 {
 	public interface IScreenTweener
 	{

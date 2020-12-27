@@ -6,8 +6,8 @@ namespace DELTation.UI.Animations.Tweeners.Properties
 {
 	public sealed class AnchoredPositionScreenTweener : Vector3ScreenTweener
 	{
-		public AnchoredPositionScreenTweener(RectTransform transform, Vector3 openState, Vector3 closedState) :
-			base(openState, closedState) =>
+		public AnchoredPositionScreenTweener(RectTransform transform, Vector3? openState, Vector3 closedState) :
+			base(openState ?? transform.anchoredPosition, closedState) =>
 			_transform = transform ? transform : throw new ArgumentNullException(nameof(transform));
 
 		protected override Vector3 CurrentState

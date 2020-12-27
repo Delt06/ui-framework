@@ -6,8 +6,8 @@ namespace DELTation.UI.Animations.Tweeners.Properties
 {
 	public sealed class AlphaScreenTweener : FloatScreenTweener
 	{
-		public AlphaScreenTweener(ITransparentElement transparentElement, float openState, float closedState) :
-			base(openState, closedState) => _transparentElement =
+		public AlphaScreenTweener(ITransparentElement transparentElement, float? openState, float closedState) :
+			base(openState ?? transparentElement.Alpha, closedState) => _transparentElement =
 			transparentElement ?? throw new ArgumentNullException(nameof(transparentElement));
 
 		protected override float CurrentState

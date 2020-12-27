@@ -6,8 +6,8 @@ namespace DELTation.UI.Animations.Tweeners.Properties
 {
 	public sealed class ScaleScreenTweener : Vector3ScreenTweener
 	{
-		public ScaleScreenTweener(Transform transform, Vector3 openState, Vector3 closedState) :
-			base(openState, closedState) =>
+		public ScaleScreenTweener(Transform transform, Vector3? openState, Vector3 closedState) :
+			base(openState ?? transform.localScale, closedState) =>
 			_transform = transform ? transform : throw new ArgumentNullException(nameof(transform));
 
 		protected override Vector3 CurrentState

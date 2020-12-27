@@ -2,7 +2,7 @@
 using DELTation.Easing;
 using UnityEngine;
 
-namespace DELTation.UI.Tweeners
+namespace DELTation.UI.Animations.Tweeners
 {
 	[Serializable]
 	public class TweenData
