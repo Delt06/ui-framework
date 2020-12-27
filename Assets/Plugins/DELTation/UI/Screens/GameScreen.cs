@@ -10,7 +10,7 @@ namespace DELTation.UI.Screens
 	public sealed class GameScreen : MonoBehaviour, IScreenListener, IGameScreen
 	{
 		[SerializeField] private bool _closeOnStart = true;
-		[SerializeField] private bool _createRaycastBlocker = true;
+		[SerializeField] private bool _blockRaycastsWhenClosed = true;
 
 		public bool IsOpened => _isOpened ?? false;
 
@@ -140,7 +140,7 @@ namespace DELTation.UI.Screens
 		}
 
 		private IRaycastBlocker RaycastBlocker =>
-			_raycastBlocker ?? (_createRaycastBlocker
+			_raycastBlocker ?? (_blockRaycastsWhenClosed
 				? _raycastBlocker = Raycasts.RaycastBlocker.CreateAt(transform)
 				: new NullRaycastBlocker());
 
