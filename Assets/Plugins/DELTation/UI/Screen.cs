@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace DELTation.UI
 {
-	public sealed class Screen : MonoBehaviour
+	[DisallowMultipleComponent]
+	public sealed class Screen : MonoBehaviour, IScreenListener
 	{
 		public bool IsOpened => _isOpened ?? false;
 
@@ -13,7 +16,11 @@ namespace DELTation.UI
 
 			ObjectIsActive = true;
 			_isOpened = true;
-			_raycastBlocker.Active = false;
+
+			if (!ObjectIsActive)
+				ObjectIsActive = true;
+
+			RaycastBlocker.Active = false;
 			transform.SetAsLastSibling();
 			OnOpened();
 		}
@@ -40,14 +47,14 @@ namespace DELTation.UI
 		{
 			if (_isOpened == false) return;
 			_isOpened = false;
-			_raycastBlocker.Active = true;
+			RaycastBlocker.Active = true;
 			transform.SetAsFirstSibling();
 			OnClosed();
 		}
 
 		private void OnClosed()
 		{
-			foreach (var listener in _listeners)
+			foreach (var listener in Listeners)
 			{
 				listener.OnClosed();
 			}
@@ -66,7 +73,7 @@ namespace DELTation.UI
 
 		private void OnClosedImmediately()
 		{
-			foreach (var listener in _listeners)
+			foreach (var listener in Listeners)
 			{
 				listener.OnClosedImmediately();
 			}
@@ -80,7 +87,7 @@ namespace DELTation.UI
 		{
 			var anyWorking = false;
 
-			foreach (var listener in _listeners)
+			foreach (var listener in Listeners)
 			{
 				if (!listener.IsWorking) continue;
 				listener.OnUpdate(Time.unscaledDeltaTime);
@@ -93,13 +100,49 @@ namespace DELTation.UI
 
 		private void Awake()
 		{
-			_raycastBlocker = RaycastBlocker.CreateAt(transform);
-			_listeners = GetComponentsInChildren<IScreenListener>();
-			CloseImmediately();
+			if (_isOpened != true)
+				CloseImmediately();
 		}
+
+		private IEnumerable<IScreenListener> GetChildrenListeners(Transform root)
+		{
+			if (root.TryGetComponent(out Screen subscreen) && !ReferenceEquals(this, subscreen))
+			{
+				yield return subscreen;
+				yield break;
+			}
+
+			foreach (var listener in root.GetComponents<IScreenListener>())
+			{
+				if (ReferenceEquals(listener, this)) continue;
+				yield return listener;
+			}
+
+			foreach (Transform child in root)
+			{
+				foreach (var screenListener in GetChildrenListeners(child))
+				{
+					yield return screenListener;
+				}
+			}
+		}
+
+		private RaycastBlocker RaycastBlocker =>
+			_raycastBlocker ? _raycastBlocker : _raycastBlocker = RaycastBlocker.CreateAt(transform);
+
+		private IScreenListener[] Listeners => _listeners ?? (_listeners = GetChildrenListeners(transform).ToArray());
 
 		private bool? _isOpened;
 		private RaycastBlocker _raycastBlocker;
 		private IScreenListener[] _listeners;
+
+		bool IScreenListener.IsWorking => gameObject.activeSelf;
+
+		void IScreenListener.OnUpdate(float deltaTime) { }
+
+		void IScreenListener.OnOpened() => Open();
+		void IScreenListener.OnClosed() => Close();
+
+		void IScreenListener.OnClosedImmediately() => CloseImmediately();
 	}
 }
