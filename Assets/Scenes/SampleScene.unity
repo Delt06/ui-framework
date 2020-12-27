@@ -625,7 +625,6 @@ GameObject:
   - component: {fileID: 459286721}
   - component: {fileID: 459286725}
   - component: {fileID: 459286724}
-  - component: {fileID: 459286723}
   - component: {fileID: 459286722}
   m_Layer: 5
   m_Name: Background
@@ -679,18 +678,6 @@ MonoBehaviour:
     Ease: 16
     Overshoot: 1.7
   _closedState: {x: 0, y: 0, z: 90}
---- !u!225 &459286723
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 459286720}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!114 &459286724
 MonoBehaviour:
   m_ObjectHideFlags: 0
