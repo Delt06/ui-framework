@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace DELTation.UI.Screens
+namespace DELTation.UI.Screens.Raycasts
 {
 	[RequireComponent(typeof(Image))]
-	internal sealed class RaycastBlocker : MonoBehaviour
+	internal sealed class RaycastBlocker : MonoBehaviour, IRaycastBlocker
 	{
 		public static RaycastBlocker CreateAt(Transform root)
 		{

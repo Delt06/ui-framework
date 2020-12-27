@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using DELTation.UI.Screens.Raycasts;
 using UnityEngine;
 
 namespace DELTation.UI.Screens
@@ -9,6 +10,7 @@ namespace DELTation.UI.Screens
 	public sealed class GameScreen : MonoBehaviour, IScreenListener, IGameScreen
 	{
 		[SerializeField] private bool _closeOnStart = true;
+		[SerializeField] private bool _createRaycastBlocker = true;
 
 		public bool IsOpened => _isOpened ?? false;
 
@@ -137,13 +139,15 @@ namespace DELTation.UI.Screens
 			}
 		}
 
-		private RaycastBlocker RaycastBlocker =>
-			_raycastBlocker ? _raycastBlocker : _raycastBlocker = RaycastBlocker.CreateAt(transform);
+		private IRaycastBlocker RaycastBlocker =>
+			_raycastBlocker ?? (_createRaycastBlocker
+				? _raycastBlocker = Raycasts.RaycastBlocker.CreateAt(transform)
+				: new NullRaycastBlocker());
 
 		private IScreenListener[] Listeners => _listeners ?? (_listeners = GetChildrenListeners(transform).ToArray());
 
 		private bool? _isOpened;
-		private RaycastBlocker _raycastBlocker;
+		private IRaycastBlocker _raycastBlocker;
 		private IScreenListener[] _listeners;
 
 		bool IScreenListener.ShouldBeAwaited => gameObject.activeSelf;
