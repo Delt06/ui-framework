@@ -6,8 +6,10 @@ using UnityEngine.UI;
 namespace Plugins.DELTation.UI.Utils
 {
 	[RequireComponent(typeof(Button))]
-	public sealed class CloseScreenButton : MonoBehaviour
+	public sealed class OpenScreenButton : MonoBehaviour
 	{
+		[SerializeField] private GameScreen _gameScreen = default;
+
 		private void OnEnable()
 		{
 			_button.onClick.AddListener(_onClick);
@@ -21,12 +23,10 @@ namespace Plugins.DELTation.UI.Utils
 		private void Awake()
 		{
 			_button = GetComponent<Button>();
-			_gameScreen = GetComponentInParent<GameScreen>();
-			_onClick = () => _gameScreen.Close();
+			_onClick = () => _gameScreen.Open();
 		}
 
 		private Button _button;
-		private GameScreen _gameScreen;
 		private UnityAction _onClick;
 	}
 }

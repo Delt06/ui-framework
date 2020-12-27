@@ -6,7 +6,7 @@ using UnityEngine;
 namespace DELTation.UI
 {
 	[DisallowMultipleComponent]
-	public sealed class Screen : MonoBehaviour, IScreenListener
+	public sealed class GameScreen : MonoBehaviour, IScreenListener
 	{
 		public bool IsOpened => _isOpened ?? false;
 
@@ -106,7 +106,7 @@ namespace DELTation.UI
 
 		private IEnumerable<IScreenListener> GetChildrenListeners(Transform root)
 		{
-			if (root.TryGetComponent(out Screen subscreen) && !ReferenceEquals(this, subscreen))
+			if (root.TryGetComponent(out GameScreen subscreen) && !ReferenceEquals(this, subscreen))
 			{
 				yield return subscreen;
 				yield break;
