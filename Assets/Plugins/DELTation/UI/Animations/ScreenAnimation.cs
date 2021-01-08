@@ -1,4 +1,5 @@
 ﻿using DELTation.UI.Animations.Tweeners;
+using DELTation.UI.Attributes;
 using DELTation.UI.Screens;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ namespace DELTation.UI.Animations
 	{
 		[SerializeField] private TweenData _openData = default;
 		[SerializeField] private bool _openToInitialState = true;
-		[SerializeField] private TInspectorValue _openState = default;
+		[SerializeField, HideIf(nameof(_openToInitialState))] private TInspectorValue _openState = default;
 		[SerializeField] private TweenData _closeData = default;
 		[SerializeField] private TInspectorValue _closedState = default;
 

@@ -276,7 +276,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _closeOnStart: 1
-  _createRaycastBlocker: 0
+  _blockRaycastsWhenClosed: 1
 --- !u!1 &204373936
 GameObject:
   m_ObjectHideFlags: 0
@@ -663,7 +663,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _closeOnStart: 1
-  _createRaycastBlocker: 1
+  _blockRaycastsWhenClosed: 1
 --- !u!222 &396069169
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1518,7 +1518,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _closeOnStart: 1
-  _createRaycastBlocker: 1
+  _blockRaycastsWhenClosed: 1
 --- !u!222 &863820198
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2387,7 +2387,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _closeOnStart: 1
-  _createRaycastBlocker: 1
+  _blockRaycastsWhenClosed: 1
 --- !u!222 &1423479477
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2447,7 +2447,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _closeOnStart: 1
-  _createRaycastBlocker: 1
+  _blockRaycastsWhenClosed: 1
 --- !u!222 &1453883075
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2642,7 +2642,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _closeOnStart: 1
-  _createRaycastBlocker: 1
+  _blockRaycastsWhenClosed: 1
 --- !u!222 &1493606370
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3712,7 +3712,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _closeOnStart: 1
-  _createRaycastBlocker: 1
+  _blockRaycastsWhenClosed: 1
 --- !u!222 &2007330799
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3895,7 +3895,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _closeOnStart: 1
-  _createRaycastBlocker: 1
+  _blockRaycastsWhenClosed: 1
 --- !u!1 &2088871559
 GameObject:
   m_ObjectHideFlags: 0
