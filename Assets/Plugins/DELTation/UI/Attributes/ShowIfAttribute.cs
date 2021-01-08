@@ -9,6 +9,7 @@ namespace DELTation.UI.Attributes
 	{
 		public string MemberName { get; }
 
-		public ShowIfAttribute([NotNull] string memberName) => MemberName = memberName ?? throw new ArgumentNullException(nameof(memberName));
+		public ShowIfAttribute([NotNull] string memberName) =>
+			MemberName = memberName ?? throw new ArgumentNullException(nameof(memberName));
 	}
 }

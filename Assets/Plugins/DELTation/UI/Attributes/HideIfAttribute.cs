@@ -9,6 +9,7 @@ namespace DELTation.UI.Attributes
 	{
 		public string MemberName { get; }
 
-		public HideIfAttribute([NotNull] string memberName) => MemberName = memberName ?? throw new ArgumentNullException(nameof(memberName));
+		public HideIfAttribute([NotNull] string memberName) =>
+			MemberName = memberName ?? throw new ArgumentNullException(nameof(memberName));
 	}
 }

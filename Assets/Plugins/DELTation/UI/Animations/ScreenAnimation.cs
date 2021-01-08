@@ -11,16 +11,25 @@ namespace DELTation.UI.Animations
 	{
 		[SerializeField] private TweenData _openData = default;
 		[SerializeField] private bool _openToInitialState = true;
-		[SerializeField, HideIf(nameof(_openToInitialState))] private TInspectorValue _openState = default;
+
+		[SerializeField, HideIf(nameof(_openToInitialState))]
+		private TInspectorValue _openState = default;
+
 		[SerializeField] private TweenData _closeData = default;
 		[SerializeField] private TInspectorValue _closedState = default;
 
 		public bool ShouldBeAwaited => _tweener.IsActive;
 		public void OnUpdate(IGameScreen gameScreen, float deltaTime) => Tweener.Update(deltaTime);
 
-		public void OnOpened(IGameScreen gameScreen) => Tweener.Open();
+		public void OnOpened(IGameScreen gameScreen)
+		{
+			Tweener.Open();
+		}
 
-		public void OnClosed(IGameScreen gameScreen) => Tweener.Close();
+		public void OnClosed(IGameScreen gameScreen)
+		{
+			Tweener.Close();
+		}
 
 		public void OnClosedImmediately(IGameScreen gameScreen) => Tweener.CloseImmediately();
 

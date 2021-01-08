@@ -1,5 +1,6 @@
 ﻿using System;
 using DELTation.Easing;
+using DELTation.UI.Attributes;
 using UnityEngine;
 
 namespace DELTation.UI.Animations.Tweeners
@@ -9,8 +10,12 @@ namespace DELTation.UI.Animations.Tweeners
 	{
 		[Min(0f)] public float Delay = 0f;
 		[Min(0f)] public float Duration = 1f;
-		public Ease Ease = Ease.Linear;
-		[Min(0f)] public float Overshoot = 1.7f;
+		[HideIf(nameof(DurationIsZero))] public Ease Ease = Ease.Linear;
+
+		[HideIf(nameof(DurationIsZero)), Min(0f)]
+		public float Overshoot = 1.7f;
+
+		private bool DurationIsZero => Mathf.Approximately(Duration, 0f);
 
 		public void Deconstruct(out float delay, out float duration, out Ease ease, out float overshoot)
 		{
