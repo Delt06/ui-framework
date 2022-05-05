@@ -1,6 +1,6 @@
 ﻿namespace DELTation.Easing
 {
-    public enum Ease
+    public enum EaseMode
     {
         Linear = 0,
         InSine, OutSine, InOutSine,

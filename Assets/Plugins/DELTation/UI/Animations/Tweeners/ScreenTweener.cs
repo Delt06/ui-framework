@@ -75,7 +75,7 @@ namespace DELTation.UI.Animations.Tweeners
 		private float _currentDelay;
 		private float _currentTime;
 		private float _currentDuration;
-		private Ease _currentEase;
+		private EaseMode _currentEase;
 		private float _currentOvershoot;
 	}
 }

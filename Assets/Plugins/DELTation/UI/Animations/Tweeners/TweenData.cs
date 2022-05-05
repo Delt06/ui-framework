@@ -10,14 +10,14 @@ namespace DELTation.UI.Animations.Tweeners
 	{
 		[Min(0f)] public float Delay = 0f;
 		[Min(0f)] public float Duration = 1f;
-		[HideIf(nameof(DurationIsZero))] public Ease Ease = Ease.Linear;
+		[HideIf(nameof(DurationIsZero))] public EaseMode Ease = EaseMode.Linear;
 
 		[HideIf(nameof(DurationIsZero)), Min(0f)]
 		public float Overshoot = 1.7f;
 
 		private bool DurationIsZero => Mathf.Approximately(Duration, 0f);
 
-		public void Deconstruct(out float delay, out float duration, out Ease ease, out float overshoot)
+		public void Deconstruct(out float delay, out float duration, out EaseMode ease, out float overshoot)
 		{
 			delay = Delay;
 			duration = Duration;
@@ -43,7 +43,7 @@ namespace DELTation.UI.Animations.Tweeners
 			State = state;
 		}
 
-		public void Deconstruct(out float delay, out float duration, out Ease ease, out float overshoot, out T state)
+		public void Deconstruct(out float delay, out float duration, out EaseMode ease, out float overshoot, out T state)
 		{
 			(delay, duration, ease, overshoot) = this;
 			state = State;
