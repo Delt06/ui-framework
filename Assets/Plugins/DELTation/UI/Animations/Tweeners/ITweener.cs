@@ -1,11 +1,11 @@
 ﻿namespace DELTation.UI.Animations.Tweeners
 {
-	public interface IScreenTweener
-	{
-		void Open();
-		void Close();
-		void CloseImmediately();
+    public interface IScreenTweener
+    {
+        void Open();
+        void Close();
+        void CloseImmediately();
 
-		void Update(float deltaTime);
-	}
+        void Update(float deltaTime);
+    }
 }

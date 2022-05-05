@@ -4,10 +4,10 @@ using UnityEngine.UI;
 
 namespace DELTation.UI.Animations
 {
-	[RequireComponent(typeof(Graphic))]
-	public sealed class ScreenGraphicAlphaAnimation : ScreenAlphaAnimation
-	{
-		protected override ITransparentElement CreateTransparentElement() =>
-			new GraphicTransparentElement(GetComponent<Graphic>());
-	}
+    [RequireComponent(typeof(Graphic))]
+    public sealed class ScreenGraphicAlphaAnimation : ScreenAlphaAnimation
+    {
+        protected override ITransparentElement CreateTransparentElement() =>
+            new GraphicTransparentElement(GetComponent<Graphic>());
+    }
 }

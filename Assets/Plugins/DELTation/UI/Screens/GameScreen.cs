@@ -6,157 +6,157 @@ using UnityEngine;
 
 namespace DELTation.UI.Screens
 {
-	[DisallowMultipleComponent]
-	public sealed class GameScreen : MonoBehaviour, IScreenListener, IGameScreen
-	{
-		[SerializeField] private bool _closeOnStart = true;
-		[SerializeField] private bool _blockRaycastsWhenClosed = true;
+    [DisallowMultipleComponent]
+    public sealed class GameScreen : MonoBehaviour, IScreenListener, IGameScreen
+    {
+        [SerializeField] private bool _closeOnStart = true;
+        [SerializeField] private bool _blockRaycastsWhenClosed = true;
 
-		public bool IsOpened => _isOpened ?? false;
+        private bool? _isOpened;
+        private IScreenListener[] _listeners;
+        private IRaycastBlocker _raycastBlocker;
 
-		public void Open()
-		{
-			if (_isOpened == true) return;
+        private bool ObjectIsActive
+        {
+            get => gameObject.activeSelf;
+            set => gameObject.SetActive(value);
+        }
 
-			ObjectIsActive = true;
-			_isOpened = true;
-			if (!ObjectIsActive)
-				ObjectIsActive = true;
-			_isOpened = true;
+        private IRaycastBlocker RaycastBlocker =>
+            _raycastBlocker ?? (_blockRaycastsWhenClosed
+                ? _raycastBlocker = Raycasts.RaycastBlocker.CreateAt(transform)
+                : new NullRaycastBlocker());
 
-			RaycastBlocker.Active = false;
-			transform.SetAsLastSibling();
-			OnOpened();
-		}
+        private IScreenListener[] Listeners => _listeners ?? (_listeners = GetChildrenListeners(transform).ToArray());
 
-		private bool ObjectIsActive
-		{
-			get => gameObject.activeSelf;
-			set => gameObject.SetActive(value);
-		}
+        private void Awake()
+        {
+            if (_closeOnStart)
+            {
+                if (_isOpened != true)
+                    CloseImmediately();
+            }
+            else
+            {
+                _isOpened = ObjectIsActive;
+            }
+        }
 
-		private void OnOpened()
-		{
-			foreach (var listener in _listeners)
-			{
-				listener.OnOpened(this);
-			}
+        private void Update()
+        {
+            var shouldBeAwaited = false;
 
-			Opened?.Invoke(this, EventArgs.Empty);
-		}
+            foreach (var listener in Listeners)
+            {
+                listener.OnUpdate(this, Time.unscaledDeltaTime);
 
-		public event EventHandler Opened;
+                if (listener.ShouldBeAwaited)
+                    shouldBeAwaited = true;
+            }
 
-		public void Close()
-		{
-			if (_isOpened == false) return;
-			_isOpened = false;
-			RaycastBlocker.Active = true;
-			transform.SetAsFirstSibling();
-			OnClosed();
-		}
+            if (!IsOpened && !shouldBeAwaited)
+                ObjectIsActive = false;
+        }
 
-		private void OnClosed()
-		{
-			foreach (var listener in Listeners)
-			{
-				listener.OnClosed(this);
-			}
+        public bool IsOpened => _isOpened ?? false;
 
-			Closed?.Invoke(this, EventArgs.Empty);
-		}
+        public void Open()
+        {
+            if (_isOpened == true) return;
 
-		public event EventHandler Closed;
+            ObjectIsActive = true;
+            _isOpened = true;
+            if (!ObjectIsActive)
+                ObjectIsActive = true;
+            _isOpened = true;
 
-		public void CloseImmediately()
-		{
-			Close();
-			ObjectIsActive = false;
-			OnClosedImmediately();
-		}
+            RaycastBlocker.Active = false;
+            transform.SetAsLastSibling();
+            OnOpened();
+        }
 
-		private void OnClosedImmediately()
-		{
-			foreach (var listener in Listeners)
-			{
-				listener.OnClosedImmediately(this);
-			}
+        public event EventHandler Opened;
 
-			ClosedImmediately?.Invoke(this, EventArgs.Empty);
-		}
+        public void Close()
+        {
+            if (_isOpened == false) return;
+            _isOpened = false;
+            RaycastBlocker.Active = true;
+            transform.SetAsFirstSibling();
+            OnClosed();
+        }
 
-		public event EventHandler ClosedImmediately;
+        public event EventHandler Closed;
 
-		private void Update()
-		{
-			var shouldBeAwaited = false;
+        public void CloseImmediately()
+        {
+            Close();
+            ObjectIsActive = false;
+            OnClosedImmediately();
+        }
 
-			foreach (var listener in Listeners)
-			{
-				listener.OnUpdate(this, Time.unscaledDeltaTime);
+        public event EventHandler ClosedImmediately;
 
-				if (listener.ShouldBeAwaited)
-					shouldBeAwaited = true;
-			}
+        bool IScreenListener.ShouldBeAwaited => gameObject.activeSelf;
 
-			if (!IsOpened && !shouldBeAwaited)
-				ObjectIsActive = false;
-		}
+        void IScreenListener.OnUpdate(IGameScreen gameScreen, float deltaTime) { }
 
-		private void Awake()
-		{
-			if (_closeOnStart)
-			{
-				if (_isOpened != true)
-					CloseImmediately();
-			}
-			else
-			{
-				_isOpened = ObjectIsActive;
-			}
-		}
+        void IScreenListener.OnOpened(IGameScreen gameScreen) => Open();
+        void IScreenListener.OnClosed(IGameScreen gameScreen) => Close();
 
-		private IEnumerable<IScreenListener> GetChildrenListeners(Transform root)
-		{
-			if (root.TryGetComponent(out GameScreen subscreen) && !ReferenceEquals(this, subscreen))
-			{
-				yield return subscreen;
-				yield break;
-			}
+        void IScreenListener.OnClosedImmediately(IGameScreen gameScreen) => CloseImmediately();
 
-			foreach (var listener in root.GetComponents<IScreenListener>())
-			{
-				if (ReferenceEquals(listener, this)) continue;
-				yield return listener;
-			}
+        private void OnOpened()
+        {
+            foreach (var listener in _listeners)
+            {
+                listener.OnOpened(this);
+            }
 
-			foreach (Transform child in root)
-			{
-				foreach (var screenListener in GetChildrenListeners(child))
-				{
-					yield return screenListener;
-				}
-			}
-		}
+            Opened?.Invoke(this, EventArgs.Empty);
+        }
 
-		private IRaycastBlocker RaycastBlocker =>
-			_raycastBlocker ?? (_blockRaycastsWhenClosed
-				? _raycastBlocker = Raycasts.RaycastBlocker.CreateAt(transform)
-				: new NullRaycastBlocker());
+        private void OnClosed()
+        {
+            foreach (var listener in Listeners)
+            {
+                listener.OnClosed(this);
+            }
 
-		private IScreenListener[] Listeners => _listeners ?? (_listeners = GetChildrenListeners(transform).ToArray());
+            Closed?.Invoke(this, EventArgs.Empty);
+        }
 
-		private bool? _isOpened;
-		private IRaycastBlocker _raycastBlocker;
-		private IScreenListener[] _listeners;
+        private void OnClosedImmediately()
+        {
+            foreach (var listener in Listeners)
+            {
+                listener.OnClosedImmediately(this);
+            }
 
-		bool IScreenListener.ShouldBeAwaited => gameObject.activeSelf;
+            ClosedImmediately?.Invoke(this, EventArgs.Empty);
+        }
 
-		void IScreenListener.OnUpdate(IGameScreen gameScreen, float deltaTime) { }
+        private IEnumerable<IScreenListener> GetChildrenListeners(Transform root)
+        {
+            if (root.TryGetComponent(out GameScreen subscreen) && !ReferenceEquals(this, subscreen))
+            {
+                yield return subscreen;
+                yield break;
+            }
 
-		void IScreenListener.OnOpened(IGameScreen gameScreen) => Open();
-		void IScreenListener.OnClosed(IGameScreen gameScreen) => Close();
+            foreach (var listener in root.GetComponents<IScreenListener>())
+            {
+                if (ReferenceEquals(listener, this)) continue;
+                yield return listener;
+            }
 
-		void IScreenListener.OnClosedImmediately(IGameScreen gameScreen) => CloseImmediately();
-	}
+            foreach (Transform child in root)
+            {
+                foreach (var screenListener in GetChildrenListeners(child))
+                {
+                    yield return screenListener;
+                }
+            }
+        }
+    }
 }

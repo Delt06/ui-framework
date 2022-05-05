@@ -5,74 +5,74 @@ using UnityEngine;
 
 namespace DELTation.UI.Editor
 {
-	public abstract class ConditionalShowPropertyDrawer : PropertyDrawer
-	{
-		public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-		{
-			var value = GetValueOrDefault(position, property);
-			var show = true;
+    public abstract class ConditionalShowPropertyDrawer : PropertyDrawer
+    {
+        private float _height;
 
-			if (value != null)
-			{
-				show = ShouldShow(value.Value);
+        private static BindingFlags BindingFlags =>
+            BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
 
-				if (show)
-					EditorGUI.PropertyField(position, property);
-			}
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            var value = GetValueOrDefault(position, property);
+            var show = true;
 
-			_height = show ? EditorGUI.GetPropertyHeight(property, label) : 0f;
-		}
+            if (value != null)
+            {
+                show = ShouldShow(value.Value);
 
-		private bool? GetValueOrDefault(Rect position, SerializedProperty property)
-		{
-			var att = (IConditionShowAttribute) attribute;
-			var serializedObject = property.serializedObject;
-			var targetObject = EditorExt.GetTargetObjectOfProperty(property, 1);
-			var fieldProperty = serializedObject.FindProperty(att.MemberName);
-			if (fieldProperty != null)
-			{
-				if (fieldProperty.propertyType == SerializedPropertyType.Boolean)
-					return fieldProperty.boolValue;
+                if (show)
+                    EditorGUI.PropertyField(position, property);
+            }
 
-				ShowError(position, $"Field {att.MemberName} is not boolean.");
-				return null;
-			}
+            _height = show ? EditorGUI.GetPropertyHeight(property, label) : 0f;
+        }
 
-			var type = targetObject.GetType();
-			var propertyMember = type.GetProperty(att.MemberName, BindingFlags);
-			if (propertyMember != null)
-			{
-				if (propertyMember.PropertyType == typeof(bool) && propertyMember.CanRead)
-					return (bool) propertyMember.GetValue(targetObject);
+        private bool? GetValueOrDefault(Rect position, SerializedProperty property)
+        {
+            var att = (IConditionShowAttribute) attribute;
+            var serializedObject = property.serializedObject;
+            var targetObject = EditorExt.GetTargetObjectOfProperty(property, 1);
+            var fieldProperty = serializedObject.FindProperty(att.MemberName);
+            if (fieldProperty != null)
+            {
+                if (fieldProperty.propertyType == SerializedPropertyType.Boolean)
+                    return fieldProperty.boolValue;
 
-				ShowError(position, $"Property {att.MemberName} is not boolean or not readable.");
-				return null;
-			}
+                ShowError(position, $"Field {att.MemberName} is not boolean.");
+                return null;
+            }
 
-			var methodMember = type.GetMethod(att.MemberName, BindingFlags);
-			if (methodMember != null)
-			{
-				if (methodMember.ReturnType == typeof(bool) && methodMember.GetParameters().Length == 0)
-					return (bool) methodMember.Invoke(targetObject, new object[0]);
+            var type = targetObject.GetType();
+            var propertyMember = type.GetProperty(att.MemberName, BindingFlags);
+            if (propertyMember != null)
+            {
+                if (propertyMember.PropertyType == typeof(bool) && propertyMember.CanRead)
+                    return (bool) propertyMember.GetValue(targetObject);
 
-				ShowError(position, $"Method {att.MemberName}'s return type is not boolean or it has parameters.");
-				return null;
-			}
+                ShowError(position, $"Property {att.MemberName} is not boolean or not readable.");
+                return null;
+            }
 
-			ShowError(position, $"Property {att.MemberName} was not found.");
-			return null;
-		}
+            var methodMember = type.GetMethod(att.MemberName, BindingFlags);
+            if (methodMember != null)
+            {
+                if (methodMember.ReturnType == typeof(bool) && methodMember.GetParameters().Length == 0)
+                    return (bool) methodMember.Invoke(targetObject, new object[0]);
 
-		private static BindingFlags BindingFlags =>
-			BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+                ShowError(position, $"Method {att.MemberName}'s return type is not boolean or it has parameters.");
+                return null;
+            }
 
-		private static void ShowError(Rect position, string message) =>
-			EditorGUI.LabelField(position, "Error: " + message);
+            ShowError(position, $"Property {att.MemberName} was not found.");
+            return null;
+        }
 
-		protected abstract bool ShouldShow(bool propertyValue);
+        private static void ShowError(Rect position, string message) =>
+            EditorGUI.LabelField(position, "Error: " + message);
 
-		public override float GetPropertyHeight(SerializedProperty property, GUIContent label) => _height;
+        protected abstract bool ShouldShow(bool propertyValue);
 
-		private float _height;
-	}
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label) => _height;
+    }
 }
