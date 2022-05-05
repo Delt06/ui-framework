@@ -11,6 +11,7 @@ namespace DELTation.UI.Screens
     {
         [SerializeField] private bool _closeOnStart = true;
         [SerializeField] private bool _blockRaycastsWhenClosed = true;
+        [SerializeField] private bool _independentFromParentScreen;
 
         private bool? _isOpened;
         private IScreenListener[] _listeners;
@@ -97,14 +98,28 @@ namespace DELTation.UI.Screens
 
         public event EventHandler ClosedImmediately;
 
-        bool IScreenListener.ShouldBeAwaited => gameObject.activeSelf;
+        bool IScreenListener.ShouldBeAwaited => !_independentFromParentScreen &&
+                                                gameObject.activeSelf;
 
         void IScreenListener.OnUpdate(IGameScreen gameScreen, float deltaTime) { }
 
-        void IScreenListener.OnOpened(IGameScreen gameScreen) => Open();
-        void IScreenListener.OnClosed(IGameScreen gameScreen) => Close();
+        void IScreenListener.OnOpened(IGameScreen gameScreen)
+        {
+            if (_independentFromParentScreen) return;
+            Open();
+        }
 
-        void IScreenListener.OnClosedImmediately(IGameScreen gameScreen) => CloseImmediately();
+        void IScreenListener.OnClosed(IGameScreen gameScreen)
+        {
+            if (_independentFromParentScreen) return;
+            Close();
+        }
+
+        void IScreenListener.OnClosedImmediately(IGameScreen gameScreen)
+        {
+            if (_independentFromParentScreen) return;
+            CloseImmediately();
+        }
 
         private void OnOpened()
         {
