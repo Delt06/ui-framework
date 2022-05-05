@@ -28,7 +28,7 @@ namespace DELTation.UI.Screens
                 ? _raycastBlocker = Raycasts.RaycastBlocker.CreateAt(transform)
                 : new NullRaycastBlocker());
 
-        private IScreenListener[] Listeners => _listeners ?? (_listeners = GetChildrenListeners(transform).ToArray());
+        private IScreenListener[] Listeners => _listeners ??= GetChildrenListeners(transform).ToArray();
 
         private void Awake()
         {
