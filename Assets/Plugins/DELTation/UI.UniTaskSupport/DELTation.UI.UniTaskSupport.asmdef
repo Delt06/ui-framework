@@ -1,8 +1,9 @@
 {
-    "name": "DELTation.UI.Utils",
+    "name": "DELTation.UI.UniTask",
     "rootNamespace": "",
     "references": [
-        "GUID:1394ee44a1348614e9d755d5cb818148"
+        "DELTation.UI",
+        "UniTask"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

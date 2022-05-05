@@ -3,20 +3,20 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace Plugins.DELTation.UI.Utils
+namespace Scripts
 {
     [RequireComponent(typeof(Button))]
-    public sealed class OpenScreenButton : MonoBehaviour
+    public sealed class CloseScreenButton : MonoBehaviour
     {
-        [SerializeField] private GameScreen _gameScreen;
-
         private Button _button;
+        private GameScreen _gameScreen;
         private UnityAction _onClick;
 
         private void Awake()
         {
             _button = GetComponent<Button>();
-            _onClick = () => _gameScreen.Open();
+            _gameScreen = GetComponentInParent<GameScreen>();
+            _onClick = () => _gameScreen.Close();
         }
 
         private void OnEnable()
