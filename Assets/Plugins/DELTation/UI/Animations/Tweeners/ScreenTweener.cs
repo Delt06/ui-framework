@@ -1,4 +1,4 @@
-﻿using DELTation.Easing;
+﻿using DELTation.UI.Easing;
 using UnityEngine;
 
 namespace DELTation.UI.Animations.Tweeners

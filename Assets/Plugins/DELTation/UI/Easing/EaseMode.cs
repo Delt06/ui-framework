@@ -1,4 +1,4 @@
-﻿namespace DELTation.Easing
+﻿namespace DELTation.UI.Easing
 {
     public enum EaseMode
     {

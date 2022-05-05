@@ -1,6 +1,6 @@
 ﻿using System;
-using DELTation.Easing;
 using DELTation.UI.Attributes;
+using DELTation.UI.Easing;
 using UnityEngine;
 
 namespace DELTation.UI.Animations.Tweeners

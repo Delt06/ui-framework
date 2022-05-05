@@ -1,7 +1,7 @@
 ﻿using System;
 using static UnityEngine.Mathf;
 
-namespace DELTation.Easing
+namespace DELTation.UI.Easing
 {
     public static class EaseExtensions
     {
