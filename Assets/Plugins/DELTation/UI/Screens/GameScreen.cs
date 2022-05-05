@@ -98,28 +98,31 @@ namespace DELTation.UI.Screens
 
         public event EventHandler ClosedImmediately;
 
-        bool IScreenListener.ShouldBeAwaited => !_independentFromParentScreen &&
-                                                gameObject.activeSelf;
+        public bool ShouldBeAwaited
+        {
+            get
+            {
+                if (!gameObject.activeSelf) return false;
+
+                foreach (var listener in Listeners)
+                {
+                    if (listener.ShouldBeAwaited)
+                        return true;
+                }
+
+                return false;
+            }
+        }
 
         void IScreenListener.OnUpdate(IGameScreen gameScreen, float deltaTime) { }
 
-        void IScreenListener.OnOpened(IGameScreen gameScreen)
-        {
-            if (_independentFromParentScreen) return;
-            Open();
-        }
+        void IScreenListener.OnOpened(IGameScreen gameScreen) => Open();
 
-        void IScreenListener.OnClosed(IGameScreen gameScreen)
-        {
-            if (_independentFromParentScreen) return;
-            Close();
-        }
+        void IScreenListener.OnClosed(IGameScreen gameScreen) => Close();
 
-        void IScreenListener.OnClosedImmediately(IGameScreen gameScreen)
-        {
-            if (_independentFromParentScreen) return;
-            CloseImmediately();
-        }
+        void IScreenListener.OnClosedImmediately(IGameScreen gameScreen) => CloseImmediately();
+
+        public IReadOnlyList<IScreenListener> GetChildListeners() => Listeners;
 
         private void OnOpened()
         {
@@ -155,7 +158,8 @@ namespace DELTation.UI.Screens
         {
             if (root.TryGetComponent(out GameScreen subscreen) && !ReferenceEquals(this, subscreen))
             {
-                yield return subscreen;
+                if (!subscreen._independentFromParentScreen)
+                    yield return subscreen;
                 yield break;
             }
 
