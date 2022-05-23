@@ -12,7 +12,7 @@ namespace DELTation.UI.Animations
         [SerializeField] private TweenData _openData;
         [SerializeField] private bool _openToInitialState = true;
 
-        [SerializeField] [HideIf(nameof(_openToInitialState))]
+        [SerializeField, HideIf(nameof(_openToInitialState))]
         private TInspectorValue _openState;
 
         [SerializeField] private TweenData _closeData;

@@ -13,10 +13,10 @@ namespace DELTation.UI.Editor
 
         [CanBeNull]
         private static GameScreenPreviewSettings _instance;
-        [SerializeField] [CanBeNull] private Canvas _canvasPrefab;
-        [SerializeField] [Min(0f)] private float _beginDelay = 0.25f;
-        [SerializeField] [Min(0f)] private float _openTime = 0.25f;
-        [SerializeField] [Min(0f)] private float _endDelay = 0.25f;
+        [SerializeField, CanBeNull] private Canvas _canvasPrefab;
+        [SerializeField, Min(0f)] private float _beginDelay = 0.25f;
+        [SerializeField, Min(0f)] private float _openTime = 0.25f;
+        [SerializeField, Min(0f)] private float _endDelay = 0.25f;
 
 
         [CanBeNull] public Canvas CanvasPrefab => _canvasPrefab;

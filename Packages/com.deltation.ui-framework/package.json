@@ -1,1 +1,13 @@
-{"name":"com.deltation.ui-framework","version":"0.1.0","displayName":"UI Framework","description":"A UI screen system for Unity. The main purpose is to animate screens opening and closing.","unity":"2020.3","keywords":[],"author":{"name":"Vladislav Kantaev","email":"vvkantaev@yandex.ru","url":"https://deltation.tatar/"}}
+{
+    "name": "com.deltation.ui-framework",
+    "version": "0.1.0",
+    "displayName": "UI Framework",
+    "description": "A UI screen system for Unity. The main purpose is to animate screens opening and closing.",
+    "unity": "2020.3",
+    "keywords": [],
+    "author": {
+        "name": "Vladislav Kantaev",
+        "email": "vvkantaev@yandex.ru",
+        "url": "https://deltation.tatar/"
+    }
+}

@@ -12,7 +12,7 @@ namespace DELTation.UI.Animations.Tweeners
         [Min(0f)] public float Duration = 1f;
         [HideIf(nameof(DurationIsZero))] public EaseMode Ease = EaseMode.Linear;
 
-        [HideIf(nameof(DurationIsZero))] [Min(0f)]
+        [HideIf(nameof(DurationIsZero)), Min(0f)]
         public float Overshoot = 1.7f;
 
         private bool DurationIsZero => Mathf.Approximately(Duration, 0f);
