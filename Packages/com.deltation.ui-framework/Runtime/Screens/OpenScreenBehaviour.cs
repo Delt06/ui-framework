@@ -1,10 +1,8 @@
-﻿using UnityEngine;
-
-namespace DELTation.UI.Screens
+﻿namespace DELTation.UI.Screens
 {
-    public abstract class OpenScreenBehaviour : MonoBehaviour, IScreenListener
+    public abstract class OpenScreenBehaviour : AwaitableAnimationBase, IScreenListener
     {
-        bool IScreenListener.ShouldBeAwaited => false;
+        public override bool ShouldBeAwaited => false;
 
         void IScreenListener.OnUpdate(IGameScreen gameScreen, float deltaTime)
         {

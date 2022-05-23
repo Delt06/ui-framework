@@ -1,8 +1,7 @@
 ﻿namespace DELTation.UI.Screens
 {
-    public interface IScreenListener
+    public interface IScreenListener : IAwaitableAnimation
     {
-        bool ShouldBeAwaited { get; }
         void OnUpdate(IGameScreen gameScreen, float deltaTime);
         void OnOpened(IGameScreen gameScreen);
         void OnClosed(IGameScreen gameScreen);

@@ -22,11 +22,11 @@ namespace DELTation.UI.UniTaskSupport
             await gameScreen.WaitForAnimationEnd();
         }
 
-        public static async UniTask WaitForAnimationEnd([NotNull] this IScreenListener screenListener)
+        public static async UniTask WaitForAnimationEnd([NotNull] this IAwaitableAnimation awaitableAnimation)
         {
-            if (screenListener == null) throw new ArgumentNullException(nameof(screenListener));
+            if (awaitableAnimation == null) throw new ArgumentNullException(nameof(awaitableAnimation));
 
-            while (screenListener.ShouldBeAwaited)
+            while (awaitableAnimation.ShouldBeAwaited)
             {
                 await UniTask.Yield();
             }

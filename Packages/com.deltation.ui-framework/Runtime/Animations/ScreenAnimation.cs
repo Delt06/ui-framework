@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace DELTation.UI.Animations
 {
-    public abstract class ScreenAnimation<TInspectorValue, TValue> : MonoBehaviour, IScreenListener
+    public abstract class ScreenAnimation<TInspectorValue, TValue> : AwaitableAnimationBase, IScreenListener
         where TInspectorValue : struct
         where TValue : struct
     {
@@ -25,7 +25,7 @@ namespace DELTation.UI.Animations
         private TInspectorValue? OpenState => _openToInitialState ? (TInspectorValue?) null : _openState;
         private TInspectorValue ClosedState => _closedState;
 
-        public bool ShouldBeAwaited => _tweener.IsActive;
+        public sealed override bool ShouldBeAwaited => _tweener.IsActive;
         public void OnUpdate(IGameScreen gameScreen, float deltaTime) => Tweener.Update(deltaTime);
 
         public void OnOpened(IGameScreen gameScreen)
