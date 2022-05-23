@@ -56,3 +56,4 @@ For each of two states (open and closed) the following parameters are available:
 
 The plugin has an integration with [UniTask](https://github.com/Cysharp/UniTask).
 It must be referenced as a separate assembly definition - `DELTation.UI.UniTaskSupport`.
+For supported operations, see `AsyncUiExtensions`.
