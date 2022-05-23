@@ -26,6 +26,10 @@ Add the following line to `Packages/manifest.json`:
 
 ## Usage
 
+If you need to use the plugin in an assembly definition, make sure to add a reference to `DELTation.UI`.
+
+To create your first screen:
+
 1) On a canvas, create a `GameObject` and attach `GameScreen` component to it.
 2) Attach open/close animations to the child object if required.
 3) Call `Open()`/`Close()` on the screen object.
@@ -47,3 +51,8 @@ For each of two states (open and closed) the following parameters are available:
 - `Duration` for actual duration of transitions
 - `Ease` for easing function
 - `Overshoot` for overshoot value of easing function
+
+### UniTask support
+
+The plugin has an integration with [UniTask](https://github.com/Cysharp/UniTask).
+It must be referenced as a separate assembly definition - `DELTation.UI.UniTaskSupport`.
