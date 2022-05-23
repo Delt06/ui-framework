@@ -11,7 +11,17 @@ namespace DELTation.UI.Editor
         {
             base.OnInspectorGUI();
 
-            var disabled = EditorApplication.isPlayingOrWillChangePlaymode;
+            var domainReloadIsEnabled = !EditorSettings.enterPlayModeOptionsEnabled ||
+                                        (EditorSettings.enterPlayModeOptions &
+                                         EnterPlayModeOptions.DisableDomainReload) == 0;
+            var disabled = EditorApplication.isPlayingOrWillChangePlaymode || domainReloadIsEnabled;
+
+            if (domainReloadIsEnabled)
+                EditorGUILayout.HelpBox(
+                    "To enable the Preview feature, disable the Reload Domain option in Project Settings/Editor/Enter Play Mode Settings.",
+                    MessageType.Warning
+                );
+
             EditorGUI.BeginDisabledGroup(disabled);
 
             if (GUILayout.Button("Preview"))
