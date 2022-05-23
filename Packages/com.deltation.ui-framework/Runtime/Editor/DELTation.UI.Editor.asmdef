@@ -1,0 +1,18 @@
+{
+    "name": "DELTation.UI.Editor",
+    "rootNamespace": "DELTation.UI",
+    "references": [
+        "GUID:2381da2088b51bb4e9cd720c600c4a2f"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

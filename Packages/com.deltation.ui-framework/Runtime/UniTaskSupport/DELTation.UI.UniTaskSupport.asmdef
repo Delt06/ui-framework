@@ -1,0 +1,23 @@
+{
+    "name": "DELTation.UI.UniTask",
+    "rootNamespace": "DELTation.UI",
+    "references": [
+        "DELTation.UI",
+        "UniTask"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.cysharp.unitask",
+            "expression": "",
+            "define": "DELTATION_UI_UNITASK"
+        }
+    ],
+    "noEngineReferences": false
+}
