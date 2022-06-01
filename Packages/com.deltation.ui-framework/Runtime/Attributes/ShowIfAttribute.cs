@@ -5,7 +5,7 @@ using UnityEngine;
 namespace DELTation.UI.Attributes
 {
     [AttributeUsage(AttributeTargets.Field)]
-    public class ShowIfAttribute : PropertyAttribute, IConditionShowAttribute
+    internal class ShowIfAttribute : PropertyAttribute, IConditionShowAttribute
     {
         public ShowIfAttribute([NotNull] string memberName) =>
             MemberName = memberName ?? throw new ArgumentNullException(nameof(memberName));

@@ -1,6 +1,6 @@
 ﻿namespace DELTation.UI.Attributes
 {
-    public interface IConditionShowAttribute
+    internal interface IConditionShowAttribute
     {
         string MemberName { get; }
     }
